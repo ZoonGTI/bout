@@ -150,13 +150,26 @@ module.exports = arietube = async (arietube, m, chatUpdate, store) => {
         if (db.data.chats[m.chat].antilink) {
         if (budy.match(`chat.whatsapp.com`)) {
         m.reply(`「 ANTI LINK 」\n\nKamu terdeteksi mengirim link group, maaf kamu akan di kick !`)
-        if (!isBotAdmins) return m.reply(`Ehh bot gak admin T_T`)
+        if (!isBotAdmins) return m.reply(`Ehh gajadi bot belom admin T_T`)
         let gclink = (`https://chat.whatsapp.com/`+await arietube.groupInviteCode(m.chat))
         let isLinkThisGc = new RegExp(gclink, 'i')
         let isgclink = isLinkThisGc.test(m.text)
         if (isgclink) return m.reply(`Ehh maaf gak jadi, karena kamu ngirim link group ini`)
         if (isAdmins) return m.reply(`Ehh maaf kamu admin`)
         if (isCreator) return m.reply(`Ehh maaf kamu owner bot ku`)
+        arietube.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
+        }
+	  }
+	if (db.chats[m.chat].wame) {
+        if (budy.match(`wa.me/`)) {
+        m.reply(`「 WA.ME DETECTED 」\n\nKamu terdeteksi mengirim wa.me kamu akan di kick di grup ini`)
+          if (!isBotAdmins) return m.reply(`Eh gajadi bot belom admin T_T`)
+        let gclink = (`https://wa.me/`)
+        let isLinkThisGc = new RegExp(gclink, 'i')
+        let isgclink = isLinkThisGc.test(m.text)
+        if (isgclink) return m.reply(`Eh sorry it didn't happen, because you sent this wa.me link`)
+        if (isAdmins) return m.reply(`Ehh maaf kamu admin`)
+        if (isCreator) return m.reply(`Ehh maaf kamu owner ku`)
         arietube.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
         }
         }
@@ -1068,6 +1081,25 @@ break
                     ]
                     await arietube.sendButtonText(m.chat, buttons, `Mode Antilink`, arietube.user.name, m)
                 }
+			case 'antiwame': {
+                if (!m.isGroup) throw mess.group
+                if (!isBotAdmins) throw mess.botAdmin
+                if (!isAdmins) throw mess.admin
+                if (args[0] === "on") {
+                if (db.chats[m.chat].wame) return m.reply(`Sudah aktif sebelumnya`)
+                db.chats[m.chat].wame = true
+                m.reply(`Anti Wa.me Activated!`)
+                } else if (args[0] === "off") {
+                if (!db.chats[m.chat].wame) return m.reply(`Sudah tidak aktif sebelumnya`)
+                db.chats[m.chat].wame = false
+                m.reply(`Anti Wa.me tidak aktif)
+                } else {
+                 let buttons = [
+                        { buttonId: 'antiwame on', buttonText: { displayText: 'ENABLE' }, type: 1 },
+                        { buttonId: 'antiwame off', buttonText: { displayText: 'DISABLE' }, type: 1 }
+                    ]
+                    await arietube.sendButtonText(m.chat, buttons, `Mode Anti Wa.me`, arietube.user.name, m)
+             }
              }
              break
              case 'mute': {
@@ -1597,7 +1629,7 @@ break
                 arietube.sendMessage(m.chat, { image: { url: result }, caption: '⭔ Media Url : '+result }, { quoted: m })
             }
             break
-            case 'anime': case 'waifu': case 'husbu': case 'neko': case 'shinobu': case 'megumin': case 'waifus': case 'nekos': case 'trap': case 'blowjob': {
+            case 'anime': case 'waifu': case 'husbu': case 'neko': case 'shinobu': case 'megumin': {
                 m.reply(mess.wait)
                 arietube.sendMessage(m.chat, { image: { url: api('zenz', '/api/random/'+command, {}, 'apikey') }, caption: 'Generate Random ' + command }, { quoted: m })
             }
@@ -2764,6 +2796,7 @@ let capt = `⭔ Title: ${judul}
 ╟📤 ${prefix}hidetag [text]
 ╟📤 ${prefix}tagall [text]
 ╟📤 ${prefix}antilink [on/off]
+╟📤 ${prefix}antiwame [on/off]
 ╟📤 ${prefix}mute [on/off]
 ╟📤 ${prefix}promote @user
 ╟📤 ${prefix}demote @user
@@ -2835,10 +2868,10 @@ let capt = `⭔ Title: ${judul}
 ╟🔗 ${prefix}husbu
 ╟🔗 ${prefix}neko
 ╟🔗 ${prefix}shinobu
-╟🔗 ${prefix}waifus (nsfw)
-╟🔗 ${prefix}nekos (nsfw)
-╟🔗 ${prefix}trap (nsfw)
-╟🔗 ${prefix}blowjob (nsfw)
+╟🔗 ${prefix}waifus (nsfw) non aktif
+╟🔗 ${prefix}nekos (nsfw) non aktif
+╟🔗 ${prefix}trap (nsfw) non aktif
+╟🔗 ${prefix}blowjob (nsfw) non aktif
 ╚═════ ▓▓ ࿇
 
 ╔═══❖•ೋ° *𝐓𝐞𝐱𝐭 𝐁𝐞𝐫𝐠𝐚𝐲𝐚*
