@@ -1081,6 +1081,8 @@ break
                     ]
                     await arietube.sendButtonText(m.chat, buttons, `Mode Antilink`, arietube.user.name, m)
                 }
+                }
+            break
 			case 'antiwame': {
                 if (!m.isGroup) throw mess.group
                 if (!isBotAdmins) throw mess.botAdmin
@@ -1092,7 +1094,7 @@ break
                 } else if (args[0] === "off") {
                 if (!db.chats[m.chat].wame) return m.reply(`Sudah tidak aktif sebelumnya`)
                 db.chats[m.chat].wame = false
-                m.reply(`Anti Wa.me tidak aktif)
+                m.reply(`Anti Wa.me tidak aktif`)
                 } else {
                  let buttons = [
                         { buttonId: 'antiwame on', buttonText: { displayText: 'ENABLE' }, type: 1 },
@@ -1100,7 +1102,7 @@ break
                     ]
                     await arietube.sendButtonText(m.chat, buttons, `Mode Anti Wa.me`, arietube.user.name, m)
              }
-             }
+              }
              break
              case 'mute': {
                 if (!m.isGroup) throw mess.group

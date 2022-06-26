@@ -150,9 +150,9 @@ async function startarietube() {
                 }
 
                 if (anu.action == 'add') {
-                    arietube.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `Selamat datang beban grup ${metadata.subject} @${num.split("@")[0]}` })
+                    arietube.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `Selamat datang beban grup di ${metadata.subject} @${num.split("@")[0]}` })
                 } else if (anu.action == 'remove') {
-                    arietube.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Selamat Tinggal ${metadata.subject}` })
+                    arietube.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Meninggalkan group ${metadata.subject}` })
                 }
             }
         } catch (err) {
